@@ -129,7 +129,7 @@ class Uploader(object):
 ftp_config={
     "ip":"123.206.27.134",
     "user":"ftpuser",
-    "password":"shang"
+    "password":"your password"
 }
 # 指定本地目录
 srcDir = "D:\\test"
