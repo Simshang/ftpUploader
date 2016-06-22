@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 __author__ = 'Simshang'
 __mail__ = 'shang.yan@foxmail.com'
 __date__ = '2016-06-14'
@@ -70,10 +72,13 @@ class Uploader(object):
             return
         self.ftp.storbinary('STOR ' + remotepath, open(localpath, 'rb'))
         # windows do not have mknod function
-        confirmFile = remotepath+'.ok'
-        os.mknod(confirmFile)
-        self.ftp.storbinary('STOR ' + confirmFile, open(localpath, 'rb'))
+        confirmFile = localpath+'.ok'
+        okfile = open(confirmFile,'w')
+        okfile.close()
+        loadConfirmFile = remotepath + '.ok'
+        self.ftp.storbinary('STOR ' + loadConfirmFile, open(localpath, 'rb'))
         os.remove(confirmFile)
+
         print '+++ upload %s to %s:%s is finished' % (localpath, self.ip, remotepath)
 
     def __filetype(self, src):
@@ -122,10 +127,11 @@ class Uploader(object):
 
 
 ftp_config={
-    "ip":"Your Server IP",
-    "user":"Your Username",
-    "password":"Your Password"
+    "ip":"123.206.27.134",
+    "user":"ftpuser",
+    "password":"shang"
 }
+# 指定本地目录
 srcDir = "D:\\test"
 # 指定多个远程目录
 dstDirs=[
