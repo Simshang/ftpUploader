@@ -106,29 +106,27 @@ class Uploader(object):
 
     def upload(self, src,dstDir):
         filetype, filename = self.__filetype(src)
-        self.initEnv()
+        #self.initEnv()
         if filetype == _LOCAL_DIR:
             self.srcDir = src
             self.uploadDir(self.srcDir,dstDir)
         elif filetype == _LOCAL_FILE:
-
-            dstfile = dstDir + '/' + filename
             try:
-                self.ftp.cwd(dstDir)
+                uploader.ftp.cwd(dstDir)
             except:
-                self.ftp.mkd(dstDir)
-                self.ftp.cwd(dstDir)
+                uploader.ftp.mkd(dstDir)
+                uploader.ftp.cwd(dstDir)
             self.uploadFile(src, filename)
 
-        self.clearEnv()
+        #self.clearEnv()
 
-
+'''
 ftp_config={
     "ip":"FTP Server IP",
     "user":"Username",
     "password":"Password"
 }
-
+'''
 
 # 指定本地目录
 srcDir = "D:\\test"
@@ -144,13 +142,25 @@ if __name__ == '__main__':
         tempDir = os.listdir(srcDir)
         uploader = Uploader()
         uploader.setFtpParams(ftp_config["ip"], ftp_config["user"], ftp_config["password"])
+
         for dstDirsNum in range(len(dstDirs)):
             for localNum in range(len(tempDir)):
+                uploader.initEnv()
                 Dir = srcDir + '\\' + tempDir[localNum]
+                # uploader.upload(srcDir, dstDirs[dstDirsNum])
+
                 if os.path.isfile(Dir):
                     uploader.upload(Dir, dstDirs[dstDirsNum])
                 else:
-                    uploader.upload(srcDir,dstDirs[dstDirsNum])
+                    dstdir = dstDirs[dstDirsNum] +'/'+ tempDir[localNum]
+                    try:
+                        uploader.ftp.cwd(dstDirs[dstDirsNum])
+                    except:
+                        uploader.ftp.mkd(dstDirs[dstDirsNum])
+                        uploader.ftp.cwd(dstDirs[dstDirsNum])
+                    uploader.upload(Dir,tempDir[localNum])
+
+                uploader.clearEnv()
 
         for delNum in range(len(tempDir)):
             Dirs = srcDir + "\\" + tempDir[delNum]
@@ -159,6 +169,7 @@ if __name__ == '__main__':
                 os.rmdir(Dirs)
             except:
                 pass
+
         print "本次任务成完成.\n--------------------------------------------\n"
         # 设置轮询时间
         time.sleep(10)
