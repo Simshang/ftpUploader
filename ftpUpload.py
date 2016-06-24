@@ -71,7 +71,7 @@ class Uploader(object):
         if not os.path.isfile(localpath):
             return
         self.ftp.storbinary('STOR ' + remotepath, open(localpath, 'rb'))
-        # windows do not have mknod function
+
         confirmFile = localpath+'.ok'
         okfile = open(confirmFile,'w')
         okfile.close()
@@ -91,7 +91,6 @@ class Uploader(object):
             return _LOCAL_DIR, ''
 
     def delete(self,src):
-        '''delete files and folders'''
         if os.path.isfile(src):
             try:
                 os.remove(src)
@@ -112,25 +111,25 @@ class Uploader(object):
             self.srcDir = src
             self.uploadDir(self.srcDir,dstDir)
         elif filetype == _LOCAL_FILE:
+
+            dstfile = dstDir + '/' + filename
             try:
-                dstfile = dstDir + '/' + filename
-                try:
-                    self.ftp.cwd(dstDir)
-                except:
-                    self.ftp.mkd(dstDir)
-                self.uploadFile(src, dstfile)
+                self.ftp.cwd(dstDir)
             except:
-                pass
+                self.ftp.mkd(dstDir)
+                self.ftp.cwd(dstDir)
+            self.uploadFile(src, filename)
+
         self.clearEnv()
 
 
-
-
 ftp_config={
-    "ip":"123.206.27.134",
-    "user":"ftpuser",
-    "password":"your password"
+    "ip":"FTP Server IP",
+    "user":"Username",
+    "password":"Password"
 }
+
+
 # 指定本地目录
 srcDir = "D:\\test"
 # 指定多个远程目录
@@ -156,7 +155,11 @@ if __name__ == '__main__':
         for delNum in range(len(tempDir)):
             Dirs = srcDir + "\\" + tempDir[delNum]
             uploader.delete(Dirs)
-        print "--------------------------------------------\n"
+            try:
+                os.rmdir(Dirs)
+            except:
+                pass
+        print "本次任务成完成.\n--------------------------------------------\n"
         # 设置轮询时间
         time.sleep(10)
 
