@@ -7,6 +7,7 @@ __version = 0.1
 
 import os
 import sys
+import shutil
 import time
 from ftplib import FTP
 
@@ -103,9 +104,23 @@ class Uploader(object):
                 if os.path.isdir(itemsrc):
                     os.rmdir(itemsrc)
 
+    def move(self,src,bakDir):
+        if os.path.isfile(src):
+            try:
+                shutil.copy(src,bakDir)
+            except:
+                pass
+        elif os.path.isdir(src):
+            for item in os.listdir(src):
+                itemsrc = os.path.join(src,item)
+                self.move(itemsrc,bakDir)
+
 
     def upload(self, src,dstDir):
-        filetype, filename = self.__filetype(src)
+        try:
+            filetype, filename = self.__filetype(src)
+        except:
+            pass
         #self.initEnv()
         if filetype == _LOCAL_DIR:
             self.srcDir = src
@@ -128,12 +143,20 @@ ftp_config={
 }
 '''
 
+ftp_config={
+    "ip":"123.206.27.134",
+    "user":"ftpuser",
+    "password":"*****"
+}
+
+
 # 指定本地目录
-srcDir = "D:\\test"
+srcDir = "D:\\ftpProject\\test"
+backupDir = "D:\\ftpProject\\testBackup"
+
 # 指定多个远程目录
 dstDirs=[
-    "./a",
-    "./b"
+    "/home/ftpuser/upload/MIAOPAI/PKU/VIDEO"
 ]
 
 
@@ -142,10 +165,9 @@ if __name__ == '__main__':
         tempDir = os.listdir(srcDir)
         uploader = Uploader()
         uploader.setFtpParams(ftp_config["ip"], ftp_config["user"], ftp_config["password"])
-
+        uploader.initEnv()
         for dstDirsNum in range(len(dstDirs)):
             for localNum in range(len(tempDir)):
-                uploader.initEnv()
                 Dir = srcDir + '\\' + tempDir[localNum]
                 # uploader.upload(srcDir, dstDirs[dstDirsNum])
 
@@ -160,17 +182,19 @@ if __name__ == '__main__':
                         uploader.ftp.cwd(dstDirs[dstDirsNum])
                     uploader.upload(Dir,tempDir[localNum])
 
-                uploader.clearEnv()
+        uploader.clearEnv()
 
         for delNum in range(len(tempDir)):
             Dirs = srcDir + "\\" + tempDir[delNum]
+
+            uploader.move(Dirs,backupDir)
             uploader.delete(Dirs)
             try:
                 os.rmdir(Dirs)
             except:
                 pass
 
-        print "本次任务成完成.\n--------------------------------------------\n"
+        print "This task is done!\n----------------------------\nWaiting for next task ......\n"
         # 设置轮询时间
         time.sleep(10)
 
