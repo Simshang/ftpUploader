@@ -81,6 +81,7 @@ class Uploader(object):
         os.remove(confirmFile)
 
         print '+++ upload %s to %s:%s is finished' % (localpath, self.ip, remotepath)
+        # print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
 
     def __filetype(self, src):
         if os.path.isfile(src):
@@ -146,7 +147,7 @@ ftp_config={
 ftp_config={
     "ip":"123.206.27.134",
     "user":"ftpuser",
-    "password":"*****"
+    "password":"shang"
 }
 
 
@@ -164,8 +165,17 @@ if __name__ == '__main__':
     while 1:
         tempDir = os.listdir(srcDir)
         uploader = Uploader()
+
+        dateTemp = time.strftime('%Y-%m-%d', time.localtime(time.time()))
+        timeDir = backupDir + '\\' + dateTemp
+        if not os.path.exists(timeDir):
+            os.makedirs(timeDir)
+        else:
+            pass
+
         uploader.setFtpParams(ftp_config["ip"], ftp_config["user"], ftp_config["password"])
         uploader.initEnv()
+
         for dstDirsNum in range(len(dstDirs)):
             for localNum in range(len(tempDir)):
                 Dir = srcDir + '\\' + tempDir[localNum]
@@ -187,7 +197,7 @@ if __name__ == '__main__':
         for delNum in range(len(tempDir)):
             Dirs = srcDir + "\\" + tempDir[delNum]
 
-            uploader.move(Dirs,backupDir)
+            uploader.move(Dirs,timeDir)
             uploader.delete(Dirs)
             try:
                 os.rmdir(Dirs)
@@ -197,6 +207,3 @@ if __name__ == '__main__':
         print "This task is done!\n----------------------------\nWaiting for next task ......\n"
         # 设置轮询时间
         time.sleep(10)
-
-
-
