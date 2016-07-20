@@ -205,5 +205,10 @@ if __name__ == '__main__':
                 pass
 
         print "This task is done!\n----------------------------\nWaiting for next task ......\n"
-        # 设置轮询时间
-        time.sleep(10)
+
+        # if files exists, task begins right now, otherwise sleep.
+        if not os.listdir(srcDir):
+            # 设置轮询时间
+            time.sleep(10)
+        else:
+            pass
