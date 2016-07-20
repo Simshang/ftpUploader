@@ -147,7 +147,7 @@ ftp_config={
 ftp_config={
     "ip":"123.206.27.134",
     "user":"ftpuser",
-    "password":"shang"
+    "password":"******"
 }
 
 

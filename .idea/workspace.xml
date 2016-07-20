@@ -32,8 +32,8 @@
       <file leaf-file-name="ftpUpload.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ftpUpload.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4002">
-              <caret line="174" column="14" selection-start-line="174" selection-start-column="14" selection-end-line="174" selection-end-column="14" />
+            <state relative-caret-position="115">
+              <caret line="149" column="22" selection-start-line="149" selection-start-column="22" selection-end-line="149" selection-end-column="22" />
               <folding>
                 <element signature="e#125#134#0" expanded="true" />
               </folding>
@@ -477,7 +477,14 @@
       <option name="project" value="LOCAL" />
       <updated>1468925345544</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Add backupDir by date">
+      <created>1468978424428</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1468978424428</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -534,7 +541,8 @@
     <MESSAGE value="fix the bug : when uploading a file or dir , a file or dir is writing into the local dir as well , the program will break down." />
     <MESSAGE value="Add backup function" />
     <MESSAGE value="Add backup date Dir" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add backup date Dir" />
+    <MESSAGE value="Add backupDir by date" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add backupDir by date" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1050,8 +1058,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ftpUpload.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4002">
-          <caret line="174" column="14" selection-start-line="174" selection-start-column="14" selection-end-line="174" selection-end-column="14" />
+        <state relative-caret-position="115">
+          <caret line="149" column="22" selection-start-line="149" selection-start-column="22" selection-end-line="149" selection-end-column="22" />
           <folding>
             <element signature="e#125#134#0" expanded="true" />
           </folding>
