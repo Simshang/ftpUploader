@@ -81,7 +81,7 @@ class Uploader(object):
         os.remove(confirmFile)
 
         print '+++ upload %s to %s:%s is finished' % (localpath, self.ip, remotepath)
-        # print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+        print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
 
     def __filetype(self, src):
         if os.path.isfile(src):
@@ -165,14 +165,14 @@ if __name__ == '__main__':
     while 1:
         tempDir = os.listdir(srcDir)
         uploader = Uploader()
-
+        # creat backupDir by date
         dateTemp = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         timeDir = backupDir + '\\' + dateTemp
         if not os.path.exists(timeDir):
             os.makedirs(timeDir)
         else:
             pass
-
+        # init ftp server
         uploader.setFtpParams(ftp_config["ip"], ftp_config["user"], ftp_config["password"])
         uploader.initEnv()
 
