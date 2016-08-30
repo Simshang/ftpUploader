@@ -96,6 +96,7 @@ class Uploader(object):
         if os.path.isfile(src):
             try:
                 os.remove(src)
+                # self.tagOK(src)
             except:
                 pass
         elif os.path.isdir(src):
@@ -136,6 +137,12 @@ class Uploader(object):
 
         #self.clearEnv()
 
+    def tagOK(self,name):
+
+        filename = name + '.ok'
+        fileOK = open(filename,'w')
+        fileOK.close()
+
 '''
 ftp_config={
     "ip":"FTP Server IP",
@@ -143,11 +150,17 @@ ftp_config={
     "password":"Password"
 }
 '''
-
+'''
 ftp_config={
     "ip":"123.206.27.134",
     "user":"ftpuser",
-    "password":"******"
+    "password":"shang"
+}
+'''
+ftp_config={
+    "ip":"192.168.239.210",
+    "user":"ftp160",
+    "password":"1qaz@WSX"
 }
 
 
