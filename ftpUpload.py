@@ -152,16 +152,12 @@ ftp_config={
 '''
 '''
 ftp_config={
-    "ip":"123.206.27.134",
+    "ip":"123.206.27.100",
     "user":"ftpuser",
     "password":"shang"
 }
 '''
-ftp_config={
-    "ip":"192.168.239.210",
-    "user":"ftp160",
-    "password":"1qaz@WSX"
-}
+
 
 
 # 指定本地目录
